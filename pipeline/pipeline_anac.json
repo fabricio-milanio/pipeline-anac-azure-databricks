@@ -1,0 +1,55 @@
+{
+	"name": "pipeline_anac",
+	"properties": {
+		"activities": [
+			{
+				"name": "Silver",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/fabricio.milanio@hotmail.com/pipeline-anac-azure-databricks/pipeline-anac-azure-databricks/Notebooks - Produção/4. Anac - Camada Silver (Refaturado)"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricksConexao",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Gold",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "Silver",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/fabricio.milanio@hotmail.com/pipeline-anac-azure-databricks/pipeline-anac-azure-databricks/Notebooks - Produção/5. Anac - Camada Gold (Refaturado)"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricksConexao",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"annotations": []
+	}
+}
